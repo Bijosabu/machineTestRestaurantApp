@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:restaurantapp/constants/constants.dart';
 import 'package:restaurantapp/presentation/HomePage/home_page.dart';
@@ -121,17 +123,26 @@ class LoginPage extends StatelessWidget {
                         minimumSize: const Size(double.infinity, 60),
                         backgroundColor: Colors.orange[600],
                       ),
-                      onPressed: () {
+                      onPressed: () async {
                         final username = usernameController.text;
                         final password = passwordController.text;
-                        saveLoginDetails(username, password, rememberMe);
 
-                        // Navigate to the HomeScreen after successful login
-                        Navigator.pushReplacement(context, MaterialPageRoute(
-                          builder: (context) {
-                            return const HomePage();
-                          },
-                        ));
+                        if (username.isEmpty || password.isEmpty) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                  content: Text(
+                                      'Enter Both Username and Password ')));
+                        } else {
+                          await saveLoginDetails(
+                              username, password, rememberMe);
+
+                          // Navigate to the HomeScreen after successful login
+                          Navigator.pushReplacement(context, MaterialPageRoute(
+                            builder: (context) {
+                              return const HomePage();
+                            },
+                          ));
+                        }
                       },
                       child: const Text(
                         'Login',

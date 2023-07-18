@@ -16,6 +16,7 @@ class MainTextField extends StatelessWidget {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return TextField(
+      style: const TextStyle(fontSize: 16),
       controller: controller,
       obscureText: obscureText,
       keyboardType: inputType,
