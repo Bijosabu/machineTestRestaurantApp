@@ -25,4 +25,5 @@ Persistent storage for Login information using shared_preferences
 User is automatically logged into the application once the logininfo is saved 
 Lottie animation for splash screen
 User experience enhanced using error handling
+Usage of Singletons,Dependency injection,freezed classes
 -->
