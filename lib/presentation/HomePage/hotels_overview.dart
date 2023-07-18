@@ -6,6 +6,7 @@ import 'package:restaurantapp/presentation/RestaurantDetails/restaurant_details.
 import 'package:restaurantapp/presentation/widgets/instructions_widget.dart';
 
 class HotelsOverviewWidget extends StatelessWidget {
+  final Size size;
   final int index;
   final String cuisineType;
   final String hotelName;
@@ -23,8 +24,6 @@ class HotelsOverviewWidget extends StatelessWidget {
     required this.rating,
   });
 
-  final Size size;
-
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -39,12 +38,28 @@ class HotelsOverviewWidget extends StatelessWidget {
                 builder: (context) {
                   return BlocBuilder<RestaurantBloc, RestaurantState>(
                     builder: (context, state) {
+                      if (state.isLoading) {
+                        const Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      }
+                      if (state.isError) {
+                        const Center(
+                          child: Text('Error loading Data'),
+                        );
+                      }
                       return RestaurantDetails(
+                        rating: state
+                            .RestaurantList[index].reviews[index].rating
+                            .toString(),
+                        reviewCount: state.RestaurantList[index].reviews.length,
+                        key: key,
+                        location: state.RestaurantList[index].latLng,
                         image: state.RestaurantList[index].photograph,
                         hotelName: state.RestaurantList[index].name,
                         cuisineType: state.RestaurantList[index].cuisineType,
                         date: state.RestaurantList[index].reviews[index].date,
-                        openTime: '',
+                        openTime: 'Monday-Friday 09 AM - 10 PM',
                         review:
                             state.RestaurantList[index].reviews[index].comments,
                         reviewerName:
@@ -59,7 +74,8 @@ class HotelsOverviewWidget extends StatelessWidget {
             child: Container(
               decoration: BoxDecoration(
                   color: Colors.grey,
-                  image: DecorationImage(image: NetworkImage(hotelImage))),
+                  image: DecorationImage(
+                      image: NetworkImage(hotelImage), fit: BoxFit.fill)),
               height: size.height * 0.35,
               width: double.infinity,
             ),

@@ -4,9 +4,14 @@ import 'package:restaurantapp/application/RestaurantBloc/restaurant_bloc.dart';
 
 import 'package:restaurantapp/presentation/HomePage/hotels_overview.dart';
 import 'package:restaurantapp/presentation/LoginPage/login_page.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
+  Future<void> clearSharedPreferences() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.clear();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -29,6 +34,7 @@ class HomePage extends StatelessWidget {
             ),
             GestureDetector(
               onTap: () {
+                clearSharedPreferences();
                 Navigator.of(context).pushReplacement(MaterialPageRoute(
                   builder: (context) {
                     return LoginPage();
@@ -58,19 +64,24 @@ class HomePage extends StatelessWidget {
                     'An Error Occurred.Please Check your Internet Connection'),
               );
             }
+
             return ListView.builder(
               itemCount: state.RestaurantList.length,
               itemBuilder: (context, index) {
-                return HotelsOverviewWidget(
-                  rating: 4.6,
-                  // rating: state.RestaurantList[index].reviews[1].rating,
-                  index: index,
-                  hotelImage: state.RestaurantList[index].photograph,
-                  size: size,
-                  address: state.RestaurantList[index].address,
-                  cuisineType: state.RestaurantList[index].cuisineType,
-                  hotelName: state.RestaurantList[index].name,
-                );
+                if (index < state.RestaurantList.length) {
+                  return HotelsOverviewWidget(
+                    rating: 4.6,
+                    // rating: state.RestaurantList[index].reviews[1].rating,
+                    index: index,
+                    hotelImage: state.RestaurantList[index].photograph,
+                    size: size,
+                    address: state.RestaurantList[index].address,
+                    cuisineType: state.RestaurantList[index].cuisineType,
+                    hotelName: state.RestaurantList[index].name,
+                  );
+                } else {
+                  return Container();
+                }
               },
             );
           },

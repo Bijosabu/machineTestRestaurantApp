@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:restaurantapp/presentation/HomePage/home_page.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -14,8 +15,24 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
+    readLoginDetails();
     navigatorHome();
     super.initState();
+  }
+
+  Future<void> readLoginDetails() async {
+    final prefs = await SharedPreferences.getInstance();
+    final username = prefs.getString('username');
+    final password = prefs.getString('password');
+    final rememberMe = prefs.getBool('rememberMe');
+
+    if (username != null &&
+        password != null &&
+        rememberMe != null &&
+        rememberMe) {
+      // Navigate to the HomeScreen if the login details are available and "Remember Me" is true
+      Navigator.pushReplacementNamed(context, '/home');
+    }
   }
 
   navigatorHome() async {

@@ -5,7 +5,7 @@ import 'package:restaurantapp/domain/core/dependencyInjection/injectable.dart';
 // import 'package:restaurantapp/presentation/RestaurantDetails/restaurant_details.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:restaurantapp/presentation/LoginPage/login_page.dart';
+import 'package:restaurantapp/presentation/splash_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -30,7 +30,7 @@ class MyApp extends StatelessWidget {
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.orange.shade600),
           useMaterial3: true,
         ),
-        home: LoginPage(),
+        home: const SplashScreen(),
       ),
     );
   }

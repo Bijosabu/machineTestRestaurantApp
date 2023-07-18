@@ -5,13 +5,15 @@ import 'package:readmore/readmore.dart';
 
 class RatingsAndReviews extends StatelessWidget {
   final String name;
+  final String rating;
   final String review;
   final String date;
   const RatingsAndReviews(
       {super.key,
       required this.name,
       required this.review,
-      required this.date});
+      required this.date,
+      required this.rating});
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +23,7 @@ class RatingsAndReviews extends StatelessWidget {
           padding: const EdgeInsets.all(8.0),
           child: Row(
             children: [
-              const RatingWidget(rating: '4.6'),
+              RatingWidget(rating: rating),
               Text(name),
             ],
           ),
@@ -52,6 +54,43 @@ class RatingsAndReviews extends StatelessWidget {
           ],
         )
       ],
+    );
+  }
+}
+
+class RatingWidget extends StatelessWidget {
+  final String rating;
+  const RatingWidget({
+    super.key,
+    required this.rating,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(right: 10),
+      child: Container(
+        decoration: BoxDecoration(
+            color: Colors.green, borderRadius: BorderRadius.circular(10)),
+        child: Padding(
+          padding: const EdgeInsets.all(4),
+          child: Row(
+            children: [
+              Text(
+                rating,
+                style: const TextStyle(
+                    fontWeight: FontWeight.bold, color: Colors.white),
+              ),
+              kHeight5,
+              const Icon(
+                Icons.star,
+                color: Colors.white,
+                size: 16,
+              )
+            ],
+          ),
+        ),
+      ),
     );
   }
 }
