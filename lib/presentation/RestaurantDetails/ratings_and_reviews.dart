@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:restaurantapp/constants/constants.dart';
-import 'package:restaurantapp/presentation/RestaurantDetails/restaurant_details.dart';
+// import 'package:restaurantapp/presentation/RestaurantDetails/restaurant_details.dart';
 import 'package:readmore/readmore.dart';
 
 class RatingsAndReviews extends StatelessWidget {
